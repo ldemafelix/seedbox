@@ -46,4 +46,19 @@ To connect Sonarr and Radarr to Jackett, you can use `http://jackett:9117` as yo
 
 To update, simply `down` the containers, pull the latest images and run the `up` commands found above again.
 
+# Plex Setup
+
+To run Plex, create the working directory and run the Plex `docker-compose` file:
+
+```
+# Create Plex directory
+mkdir /var/lib/seedbox/plex
+
+# Change folder ownershihp (use the UID and GID in your Sonarr/Radarr docker-compose files)
+chown -R 1000:1000 /var/lib/seedbox/plex
+
+# Run the Plex docker-compose file
+docker-compose -p seedbox-plex -f plex.yml up -ddocker-compose -p seedbox-plex -f plex.yml up -d
+```
+
 Enjoy!

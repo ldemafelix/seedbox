@@ -48,7 +48,7 @@ To update, simply `down` the containers, pull the latest images and run the `up`
 
 # Plex Setup
 
-To run Plex, create the working directory and run the Plex `docker-compose` file:
+To run Plex, edit `plex.yml` and set your claim token (you can get this from [https://www.plex.tv/claim/](https://www.plex.tv/claim/). Then, create the working directory and run the Plex `docker-compose` file:
 
 ```
 # Create Plex directory

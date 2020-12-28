@@ -24,6 +24,16 @@ docker-compose -p seedbox-downloader -f downloader.yml up -d
 docker-compose -p seedbox-manager -f manager.yml up -d
 ```
 
+Then, set up your library inside the `library` folder. Always change your library's owner to whatever `PUID` and `PGID` you set in the `docker-compose` files. By default, this is `1000` (UID) and `1000` (GID), so to do that:
+
+```
+# Set up your library however you want
+mkdir -p /var/lib/seedbox/library/{Anime,Movies,Shows}
+
+# Change folder ownership
+chown -R 1000:1000 /var/lib/seedbox/library
+```
+
 Once the containers are up, you're good to go. VPN traffic is automatically routed through your OpenVPN server. Your OpenVPN config file can be named anything you want, as long as it ends in `.ovpn`.
 
 If you want qBittorrent to automatically run `unrar` after downloading, the correct command to put in qBittorrent's config UI is:

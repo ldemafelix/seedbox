@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+  vpn:
+    image: dperson/openvpn-client
+    container_name: seedbox-vpn
+    cap_add:
+      - net_admin
+    environment:
+      - TZ=Asia/Manila
+      - DNS=1.1.1.1
+    networks:
+      - default
+    tmpfs:
+      - /run
+      - /tmp
+    restart: unless-stopped
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - /dev/net:/dev/net:z
+      - /var/lib/seedbox/vpn:/vpn
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
+
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    container_name: seedbox-qb
+    depends_on:
+      - vpn
+    environment:
+      - PUID=1000
+      - GUID=1000
+      - TZ=Asia/Manila
+      - WEBUI_PORT=8080
+    network_mode: "service:vpn"
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - /var/lib/seedbox/downloads:/downloads
+      - /var/lib/seedbox/qbittorrent:/config
+
+networks:
+  default:

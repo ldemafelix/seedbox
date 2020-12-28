@@ -1,0 +1,16 @@
+version: "2.1"
+services:
+  plex:
+    image: ghcr.io/linuxserver/plex
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - UMASK_SET=022
+      - PLEX_CLAIM=your-plex-claim-token-here
+    volumes:
+      - /var/lib/seedbox/plex:/config
+      - /var/lib/seedbox/library:/library
+    restart: unless-stopped

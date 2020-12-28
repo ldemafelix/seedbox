@@ -42,6 +42,12 @@ If you want qBittorrent to automatically run `unrar` after downloading, the corr
 unrar x "%F/*.r*" "%F/"
 ```
 
+Alternatively, to recursively scan and `unrar` files:
+
+```
+find "%F/" -name '*.rar' -execdir unrar e {} \;
+```
+
 To connect Sonarr and Radarr to Jackett, you can use `http://jackett:9117` as your base URL instead of your public IP, as they belong to the same Docker project network.
 
 To update, simply `down` the containers, pull the latest images and run the `up` commands found above again.

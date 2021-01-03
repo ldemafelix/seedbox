@@ -1,0 +1,68 @@
+version: '3.4'
+
+services:
+  jackett:
+    image: ghcr.io/linuxserver/jackett
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Manila
+      - AUTO_UPDATE=true
+    volumes:
+      - /mnt/slab1/seedbox/jackett:/config
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr:preview
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Manila
+    volumes:
+      - /mnt/slab1/seedbox/sonarr:/config
+      - /mnt/gdrive:/content
+      - /mnt/slab1/seedbox/downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: ghcr.io/linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Manila
+    volumes:
+      - /mnt/slab1/seedbox/radarr:/config
+      - /mnt/gdrive:/content
+      - /mnt/slab1/seedbox/downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - GUID=1000
+      - TZ=Asia/Manila
+      - WEBUI_PORT=8080
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - /mnt/slab1/seedbox/downloads:/downloads
+      - /mnt/slab1/seedbox/qbittorrent:/config
+
+networks:
+  default:

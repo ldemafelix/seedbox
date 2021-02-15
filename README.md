@@ -64,7 +64,7 @@ mkdir /var/lib/seedbox/plex
 chown -R 1000:1000 /var/lib/seedbox/plex
 
 # Run the Plex docker-compose file
-docker-compose -p seedbox-plex -f plex.yml up -ddocker-compose -p seedbox-plex -f plex.yml up -d
+docker-compose -p seedbox-plex -f plex.yml up -d
 ```
 
 Enjoy!
